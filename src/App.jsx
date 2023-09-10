@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 function App() {
-	const [list, setList] = useState([1, 2, 3, 4, 5]);
+	const [list, setList] = useState([1, 2, 3]);
 
 	const handleAddItem = () =>
 		setList((prevList) => [
@@ -24,27 +24,56 @@ function App() {
 					onClick={handleAddItem}>
 					Add
 				</button>
-				<ul className='w-1/3'>
-					<AnimatePresence>
-						{list.map((li) => (
-							<motion.li
-								key={li}
-								className='w-full p-3 border-b flex justify-between items-center last:border-b-0'
-								layout
-								initial={{ opacity: 0 }}
-								animate={{ opacity: 1 }}
-								exit={{ opacity: 0 }}
-								transition={{ layout: { type: 'spring' } }}>
-								<span>Item: {li}</span>
-								<button
-									className='px-3 p-y2 border rounded'
-									onClick={() => handleRemoveItem(li)}>
-									&times;
-								</button>
-							</motion.li>
-						))}
-					</AnimatePresence>
-				</ul>
+				<div className='w-full flex justify-evenly'>
+					<ul className='w-1/3 mt-10 px-5 py-3 border overflow-hidden rounded'>
+						<AnimatePresence>
+							{list.map((li) => (
+								<motion.li
+									key={li}
+									className='border-b last:border-b-0'
+									layout
+									initial={{ opacity: 0, height: 0 }}
+									animate={{ opacity: 1, height: 'auto' }}
+									exit={{ opacity: 0, height: 0 }}
+									transition={{ duration: 0.4 }}>
+									<div className='w-full p-3 flex justify-between items-center'>
+										<span>Item: {li}</span>
+										<button
+											className='border px-2 py-1'
+											onClick={() =>
+												handleRemoveItem(li)
+											}>
+											&times;
+										</button>
+									</div>
+								</motion.li>
+							))}
+						</AnimatePresence>
+					</ul>
+					<ul className='w-1/3 border px-5 py-3 mt-10 rounded'>
+						<AnimatePresence>
+							{list.map((li) => (
+								<motion.li
+									key={li}
+									className='border-b last:border-b-0'
+									initial={{ opacity: 0, height: 0 }}
+									animate={{ opacity: 1, height: 'auto' }}
+									exit={{ opacity: 0, height: 0 }}>
+									<div className='p-3 flex justify-between items-center'>
+										<span>Item: {li}</span>
+										<button
+											className='border px-2 py-1'
+											onClick={() =>
+												handleRemoveItem(li)
+											}>
+											&times;
+										</button>
+									</div>
+								</motion.li>
+							))}
+						</AnimatePresence>
+					</ul>
+				</div>
 			</div>
 		</div>
 	);
